@@ -70,7 +70,7 @@ function CheckMap()
     const myMap = new Map();
 
     myMap.set("#name", ["", "Bo99@b", " Charlie", "Charlie ", "Ch arlie", "Charlie"]);
-    myMap.set("#email", ["", "example.com", " charlie@example.com", "ch arlie@example.com ", "charlie@example.com", "charlie@example.com"]);
+    myMap.set("#email", ["", "example.com", " charlie@example.com", "charlie@example.com ", "ch arlie@example.com", "charlie@example.com"]);
     myMap.set("#phone", ["", "--9876543210", " +5412345678", "+5412345678 ", "+54 12345678", "+5412345678"]);//+54 Argentina Telephone prefix
     myMap.set("#company", ["", "-Com+pan@y", " BBB", "BBB " , "BB B", "BBB"]);
 
