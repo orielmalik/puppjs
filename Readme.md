@@ -1,34 +1,66 @@
-# Puppeteer Test Automation Script
+# PuppJS - Puppeteer Test Automation Framework
 
-This repository contains a Puppeteer script that performs automated testing on a form. The script types values into form fields, takes screenshots, and interacts with the page. It also handles different test scenarios like validating multiple inputs and checking if the user reaches the "Thank You" page.
+**Advanced Form Automation Framework** built with **Puppeteer** for reliable web form testing.
+
+---
 
 ## Overview
 
-The automation flow includes the following steps:
+**PuppJS** is a well-structured test automation framework designed to automatically fill, submit, and validate web forms. 
 
-1. Type values in the Name, Email, Phone, and Company fields from a predefined set of test values.
-2. Create a screenshot of the page before clicking the “Request a call back” button.(Exist screenshots file)
-3. Change the "Number of Employees" from 1-10 to 51-500 (Bonus feature).
-4. Click the "Request a call back" button.
-5. Log the URL when reaching the "Thank You" page.
-6. Clean the form fields after each test to prepare for the next input.
+The framework currently targets the demo form at:  
+**https://testsite.getjones.com/ExampleForm/**
 
-## The Test Map
+It fills all fields (Name, Email, Phone, Company, Number of Employees), captures screenshots, submits the form, verifies successful submission on the "Thank You" page, and cleans the form for the next test iteration.
 
-The values for the form fields are provided in a `Map` object. Each key corresponds to a field's selector, and the values are an array of test inputs.
+The project is built using professional design patterns and a **Finite State Machine (FSM)** to manage the test flow efficiently.
 
-```javascript
-const myMap = new Map();
+---
 
-myMap.set("#name", ["", "Bo99@b", "Charlie", "Charlie ", "Ch arlie", "Charlie"]);
-myMap.set("#email", ["", "example.com", "charlie@example.com", "ch arlie@example.com", "charlie@example.com", "charlie@example.com"]);
-myMap.set("#phone", ["", "--9876543210", "+5412345678", "+5412345678 ", "+54 12345678", "+5412345678"]);
-myMap.set("#company", ["", "-Com+pan@y", "BBB", "BBB ", "BB B", "BBB"]);
+## What This Code Does
 
+- Launches a Puppeteer browser (headless or headful)
+- Navigates to the target form page
+- Loads test data from JSON files
+- Fills every form field according to the selected test mode
+- Selects dropdown value (Number of Employees)
+- Takes screenshots before submission
+- Submits the form
+- Validates that the success ("Thank You") page appears
+- Clears the form
+- Repeats the process for the requested number of iterations
+- Provides clear console logging and final summary
 
-### Explanation:
+Supports two main modes:
+- **`PASS`** – Positive test cases (valid data)
+- **`FAIL`** – Negative / Edge case testing
 
-- **Test Steps**: Describes the sequence of actions (typing values, taking screenshots, clicking buttons, and validating the result).
-- **Map**: Specifies the test data used for the fields (Name, Email, Phone, Company).
-- **Script**: Full Puppeteer script for automation.
-- **Installation & Usage**: Instructions to clone the repo, install dependencies, and run the script.
+---
+
+## Key Features
+
+- Clean separation of concerns using design patterns (Adapter, Builder, Engine, etc.)
+- JSON-driven test data (easy to add or modify test cases)
+- Robust error handling and logging
+- Automatic form cleanup between iterations
+- Screenshot capture for every test
+- Finite State Machine for reliable workflow control
+- Highly maintainable and scalable architecture
+- Easy configuration via `settings.json`
+
+---
+
+## Project Structure
+
+```bash
+puppjs/
+├── index.js                    # Main entry point
+├── Jsons/
+│   ├── ArgentinaForm.json      # Test data
+│   └── settings.json           # Configuration
+├── Patterns/                   # Design patterns (Adapter, Builder, Logger...)
+├── Engine/                     # Flow Engine & State Machine
+├── Actions/                    # Puppeteer actions
+├── Utils/                      # Helpers, validators, etc.
+├── Selectors/                  # All element selectors
+└── screenshots/                # Automatically created folder
