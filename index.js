@@ -1,78 +1,56 @@
+const fs = require('fs');
+const path = require('path');
 const puppeteer = require('puppeteer');
-const checker=CheckMap();
-(async () => {
-    const browser = await puppeteer.launch();
-    const page = await browser.newPage();
-    await page.goto('https://testsite.getjones.com/ExampleForm/');
 
+const { buildIndex } = require('./Patterns/IndexBuilder');
+const PuppeteerAdapter = require('./Patterns/puppeteerAdapter');
+const settings = require('./Jsons/settings.json');
+const { readJson } = require('./Utils/helpers');
+const { SELECTORS_REL, thankYouSelectorFromMap } = require('./Selectors/registry');
+const { buildArgentinaRunPlan } = require('./services/argentinaFormService');
+const { runFlowEngine } = require('./Engine/flowEngine');
 
+const DATA_FILE = 'Jsons/ArgentinaForm.json';
 
-    for (let i= 0; i < 6; i++) {
-        for (let [key, values] of checker) {
+const requestedCount = parseInt(process.argv[2], 10) || 1;
+const requestedMode = (process.argv[3] || 'PASS').toUpperCase();
 
-            //Type values in the Name, Email, Phone and Company fields.
+async function main() {
+  const selectorsMap = readJson(SELECTORS_REL);
+  const indexMap = buildIndex(DATA_FILE, SELECTORS_REL);
+  const plan = buildArgentinaRunPlan({
+    requestedCount,
+    requestedMode,
+    settings,
+    indexMap,
+    thankYouSelector: thankYouSelectorFromMap(selectorsMap)
+  });
 
-            await page.type(key, values[i]);
-        }
+  console.log(`FSM Mode: ${requestedMode} | Total Tests to run: ${plan.iterations}`);
 
-        // Bonus: Change the Number of Employees from 1-10 to 51-500
+  const dir = path.join(process.cwd(), settings.screenshotsDir || 'screenshots');
+  if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
 
+  plan.screenshotDir = dir;
+  plan.settleMs = 400;
+  plan.submitTimeout = (settings.navigationTimeout || 5000) * 6;
 
-        await page.select('#employees','51-500');
+  const formDef = readJson(DATA_FILE);
+  const browser = await puppeteer.launch({ headless: process.env.HEADLESS !== 'false' });
+  const page = await browser.newPage();
 
-//Click the “Request a call back” button
-        //boolean condition to check if we arrived thank you page
+  const adapter = new PuppeteerAdapter(page, indexMap, {
+    baseUrl: formDef.website || settings.baseUrl,
+    navigationTimeout: settings.navigationTimeout || 5000
+  }, selectorsMap);
 
-        let thank=false;
-        try {
-            await Promise.all([
-                page.click('.primary.button'),
-                page.screenshot({ path: `screenshots/screenshot_${i + 1}.jpg`, type:'jpeg' })//screenshot before clicking
-        ,
-                page.waitForNavigation({ timeout: 5000 }) // Wait for 5 seconds max
-            ]);
-            console.log('thank you page at url: ', page.url());
-
-
-        } catch (error) {
-            //
-        }
-
-        //clean fields,When we were able to gather, then for the next test we will have to enter the page again.
-
-
-
-
-        //check  page-many options to check it but i chose 1
-        const cleaner=await page.$("#name");
-        if(cleaner) {
-
-            for (let key of checker.keys()) {
-                await page.$eval(key, el => el.value = '');
-            }
-        }
-        else {
-            await page.goto('https://testsite.getjones.com/ExampleForm/');
-
-        }
-
-
-
-    }
-
-    await browser.close();
-})();
-
-//Write Map includes all check values
-//at Value exist array["","Not FormatValue","start space "," end space"," inside space  ","FormatValue"]
-function CheckMap()
-{
-    const myMap = new Map();
-
-    myMap.set("#name", ["", "Bo99@b", " Charlie", "Charlie ", "Ch arlie", "Charlie"]);
-    myMap.set("#email", ["", "example.com", " charlie@example.com", "charlie@example.com ", "ch arlie@example.com", "charlie@example.com"]);
-    myMap.set("#phone", ["", "--9876543210", " +5412345678", "+5412345678 ", "+54 12345678", "+5412345678"]);//+54 Argentina Telephone prefix
-    myMap.set("#company", ["", "-Com+pan@y", " BBB", "BBB " , "BB B", "BBB"]);
-
-    return myMap;
+  await runFlowEngine({ adapter, plan });
+  await browser.close();
+  return plan.iterations;
 }
+
+if (require.main === module) {
+  main().then(total => console.log(`Finished ${total} tests.`));
+}
+
+module.exports = { main };
