@@ -1,20 +1,12 @@
 {
-  "website": "https://testsite.getjones.com/ExampleForm/",
+  "website": "https://test.netlify.app/",
     "name": [
         "", "name", "name family", "name_family", "name%$",
         "123", "John123", "O'Connor", "Anne-Marie", "李小龍",
         " ", "A", "VeryLongNameThatExceedsNormalLengthForTestingPurpose",
         "name!", "@name", "name#", "name$", "name%", "name^", "name&"
     ],
-    "email": [
-        "", "afekalrn@gmail.com", "kgmail.com", "$",
-        "user@", "@domain.com", "user@domain", "user@domain..com",
-        "user.name+test@example.com", "user_name@example.co.uk",
-        "user-name@sub.domain.com", "user@123.123.123.123",
-        "plainaddress", "missingatsign.com", "missingdomain@.com",
-        "name@domain.c", "name@domain.toolongtld", "name@domain..com",
-        "user@domain#com", "user@domain!com"
-    ],
+
     "phone": [
         "", "05", "+54 9 11 0000-0000", "050000000",
         "123", "000-000-0000", "+1 (555) 555-5555", "5555555555",
@@ -28,5 +20,14 @@
         "12345", "@Company", "Company#", "Company%", "Company^",
         "Company*", "Company(", "Company)", "Company+", "Company="],
   "employees": ["1-10","11-50","51-500","500+"],
+  "email": [
+    "", "afekalrn@gmail.com", "kgmail.com", "$",
+    "user@", "@domain.com", "user@domain", "user@domain..com",
+    "user.name+test@example.com", "user_name@example.co.uk",
+    "user-name@sub.domain.com", "user@123.123.123.123",
+    "plainaddress", "missingatsign.com", "missingdomain@.com",
+    "name@domain.c", "name@domain.toolongtld", "name@domain..com",
+    "user@domain#com", "user@domain!com"
+  ],
   "primary button": []
 }

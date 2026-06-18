@@ -1,16 +1,16 @@
 const fs = require('fs');
 const path = require('path');
-const puppeteer = require('puppeteer');
+const { chromium } = require('playwright');
 
 const { buildIndex } = require('./Patterns/IndexBuilder');
-const PuppeteerAdapter = require('./Patterns/puppeteerAdapter');
+const PlaywrightAdapter = require('./Patterns/playwrightAdapter');
 const settings = require('./Jsons/settings.json');
 const { readJson } = require('./Utils/helpers');
 const { SELECTORS_REL, thankYouSelectorFromMap } = require('./Selectors/registry');
-const { buildArgentinaRunPlan } = require('./services/argentinaFormService');
+const { buildArgentinaRunPlan } = require('./services/ACMEService');
 const { runFlowEngine } = require('./Engine/flowEngine');
 
-const DATA_FILE = 'Jsons/ArgentinaForm.json';
+const DATA_FILE = 'Jsons/ACMEform.json';
 
 const requestedCount = parseInt(process.argv[2], 10) || 1;
 const requestedMode = (process.argv[3] || 'PASS').toUpperCase();
@@ -36,15 +36,21 @@ async function main() {
   plan.submitTimeout = (settings.navigationTimeout || 5000) * 6;
 
   const formDef = readJson(DATA_FILE);
-  const browser = await puppeteer.launch({ headless: process.env.HEADLESS !== 'false' });
-  const page = await browser.newPage();
+  const browser = await chromium.launch({ headless: process.env.HEADLESS !== 'false' });
+  const context = await browser.newContext();
+  const page = await context.newPage();
 
-  const adapter = new PuppeteerAdapter(page, indexMap, {
+  const adapter = new PlaywrightAdapter(page, indexMap, {
     baseUrl: formDef.website || settings.baseUrl,
-    navigationTimeout: settings.navigationTimeout || 5000
+    navigationTimeout: settings.navigationTimeout || 5000,
+    thankYouSelector: plan.thankYouSelector,
+    submitTimeout: plan.submitTimeout,
+    screenshotDir: plan.screenshotDir,
+    settleMs: plan.settleMs
   }, selectorsMap);
 
   await runFlowEngine({ adapter, plan });
+  await context.close();
   await browser.close();
   return plan.iterations;
 }

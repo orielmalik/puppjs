@@ -4,5 +4,5 @@
   "phone":        "#phone",
   "company":      "#company",
   "employees":    "#employees",
-  "primarybutton": "xpath=/html/body/div/div[2]/div[2]/div/form/p[6]/button"
+  "primarybutton": "xpath=/html/body/div[1]/div[2]/div[2]/div/form/p[7]/button"
 }
