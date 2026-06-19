@@ -41,7 +41,7 @@ async function main() {
   const page = await context.newPage();
 
   const adapter = new PlaywrightAdapter(page, indexMap, {
-    baseUrl: formDef.website || settings.baseUrl,
+    baseUrl: settings.baseUrl,
     navigationTimeout: settings.navigationTimeout || 5000,
     thankYouSelector: plan.thankYouSelector,
     submitTimeout: plan.submitTimeout,
@@ -49,14 +49,24 @@ async function main() {
     settleMs: plan.settleMs
   }, selectorsMap);
 
-  await runFlowEngine({ adapter, plan });
-  await context.close();
-  await browser.close();
+  try {
+    await runFlowEngine({ adapter, plan });
+  } catch (error) {
+    console.error(error);
+  } finally {
+    try {
+      if (context) await context.close();
+      if (browser) await browser.close();
+    } catch (closeError) {
+      console.warn(closeError);
+    }
+  }
+
   return plan.iterations;
 }
 
 if (require.main === module) {
-  main().then(total => console.log(`Finished ${total} tests.`));
+  main().then(total => console.log(`Finished ${total} tests.`)).catch(console.error);
 }
 
 module.exports = { main };

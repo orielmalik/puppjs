@@ -4,5 +4,6 @@
   "phone":        "#phone",
   "company":      "#company",
   "employees":    "#employees",
+  "website":       "#website",
   "primarybutton": "xpath=/html/body/div[1]/div[2]/div[2]/div/form/p[7]/button"
 }

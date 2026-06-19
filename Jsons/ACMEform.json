@@ -1,5 +1,4 @@
 {
-  "website": "https://test.netlify.app/",
     "name": [
         "", "name", "name family", "name_family", "name%$",
         "123", "John123", "O'Connor", "Anne-Marie", "李小龍",
@@ -28,6 +27,15 @@
     "plainaddress", "missingatsign.com", "missingdomain@.com",
     "name@domain.c", "name@domain.toolongtld", "name@domain..com",
     "user@domain#com", "user@domain!com"
+  ],
+  "website": ["",
+    "https://test.netlify.app/",
+    "https://example.com",
+    "http://example.com",
+    "not_a_valid_url",
+    "ftp://invalid-protocol.com",
+    "https://this-domain-does-not-exist-123456789.com",
+    "localhost:3000"
   ],
   "primary button": []
 }

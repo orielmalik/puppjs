@@ -15,26 +15,26 @@ function buildIndex(dataPath, selectorsPath) {
 
     const index = {};
     for (const field of Object.keys(data)) {
-
-        if (field === 'website' || field === 'defaults') continue;
-
         const key = normalize(field);
 
         let selector = selectors[key];
-        if (!selector && !key.endsWith("button")) {
-            logger.error({ errorAt: key });
-            throw new Error(`Missing selector for field: ${key}`);
-        }
-        if (selector && typeof selector === 'object') {
-            selector = selector.selector || selector.value;
-        }
 
-        if (!selector && key.endsWith("button")) {
-            selector = `xpath=//button[contains(., '${field}')]`;
-        }
+            if (!selector && !key.endsWith("button")) {
+                logger.error({ errorAt: key });
+                throw new Error(`Missing selector for field: ${key}`);
+            }
 
-        if (typeof selector !== 'string') {
-            throw new Error(`Selector must be string for field: ${field}`);
+            if (selector && typeof selector === 'object') {
+                selector = selector.selector || selector.value;
+            }
+
+            if (!selector && key.endsWith("button")) {
+                selector = `xpath=//button[contains(., '${field}')]`;
+            }
+
+            if (typeof selector !== 'string') {
+                throw new Error(`Selector must be string for field: ${field}`);
+
         }
 
         index[key] = {

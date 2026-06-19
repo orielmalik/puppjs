@@ -1,5 +1,5 @@
 {
-  "baseUrl":            "https://testsite.getjones.com/ExampleForm/",
+  "baseUrl":           "https://test.netlify.app/",
   "screenshotsDir":     "screenshots",
   "navigationTimeout":  5000,
   "employeesValue":     "51-500"
