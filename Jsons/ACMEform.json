@@ -1,6 +1,6 @@
 {
     "name": [
-        "", "name", "name family", "name_family", "name%$",
+        "",  "name family","name", "name_family", "name%$",
         "123", "John123", "O'Connor", "Anne-Marie", "李小龍",
         " ", "A", "VeryLongNameThatExceedsNormalLengthForTestingPurpose",
         "name!", "@name", "name#", "name$", "name%", "name^", "name&"
@@ -14,7 +14,7 @@
         "(050) 0000-0000", "+54-9-11-1234-5678", "+540500000000"
     ],
     "company": [
-        "", "BBC", "^&", "Company123", "Acme!", "O'Reilly",
+        "",  "^&", "BBC","Company123", "Acme!", "O'Reilly",
         "Mega_Corp", "Test&Co", "MyCompany$", "LongCompanyNameThatExceedsLimits",
         "12345", "@Company", "Company#", "Company%", "Company^",
         "Company*", "Company(", "Company)", "Company+", "Company="],

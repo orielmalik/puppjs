@@ -12,61 +12,67 @@ const { runFlowEngine } = require('./Engine/flowEngine');
 
 const DATA_FILE = 'Jsons/ACMEform.json';
 
-const requestedCount = parseInt(process.argv[2], 10) || 1;
-const requestedMode = (process.argv[3] || 'PASS').toUpperCase();
 
+function buildTestCaseByIndex(index, data) {
+  const result = {};
+
+  for (const key of Object.keys(data)) {
+    result[key] = data[key][index] ?? data[key][0] ?? '';
+  }
+
+  return result;
+}
 async function main() {
   const selectorsMap = readJson(SELECTORS_REL);
   const indexMap = buildIndex(DATA_FILE, SELECTORS_REL);
-  const plan = buildArgentinaRunPlan({
-    requestedCount,
-    requestedMode,
-    settings,
-    indexMap,
-    thankYouSelector: thankYouSelectorFromMap(selectorsMap)
-  });
+  const formDef = readJson(DATA_FILE);
 
-  console.log(`FSM Mode: ${requestedMode} | Total Tests to run: ${plan.iterations}`);
+  const modeIndex = parseInt(process.argv[2], 10) || 2;
+  // 2 = stable guaranteed case
+
+  console.log(`Running MODE INDEX: ${modeIndex}`);
 
   const dir = path.join(process.cwd(), settings.screenshotsDir || 'screenshots');
   if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
 
-  plan.screenshotDir = dir;
-  plan.settleMs = 400;
-  plan.submitTimeout = (settings.navigationTimeout || 5000) * 6;
-
-  const formDef = readJson(DATA_FILE);
   const browser = await chromium.launch({ headless: process.env.HEADLESS !== 'false' });
   const context = await browser.newContext();
   const page = await context.newPage();
 
-  const adapter = new PlaywrightAdapter(page, indexMap, {
-    baseUrl: settings.baseUrl,
-    navigationTimeout: settings.navigationTimeout || 5000,
-    thankYouSelector: plan.thankYouSelector,
-    submitTimeout: plan.submitTimeout,
-    screenshotDir: plan.screenshotDir,
-    settleMs: plan.settleMs
-  }, selectorsMap);
+  const adapter = new PlaywrightAdapter(
+      page,
+      indexMap,
+      {
+        baseUrl: settings.baseUrl,
+        navigationTimeout: settings.navigationTimeout || 5000,
+        thankYouSelector: thankYouSelectorFromMap(selectorsMap),
+        submitTimeout: (settings.navigationTimeout || 5000) * 6,
+        screenshotDir: dir,
+        settleMs: 400
+      },
+      selectorsMap
+  );
 
   try {
-    await runFlowEngine({ adapter, plan });
+    const testCase = buildTestCaseByIndex(modeIndex, indexMap);
+
+    await runFlowEngine({
+      adapter,
+      testCase
+    });
+
   } catch (error) {
     console.error(error);
-  } finally {
-    try {
-      if (context) await context.close();
-      if (browser) await browser.close();
-    } catch (closeError) {
-      console.warn(closeError);
-    }
   }
 
-  return plan.iterations;
+  try {
+    await context.close().catch(() => {});
+    await browser.close().catch(() => {});
+  } catch (e) {}
+
+  console.log(`Finished single run (mode=${modeIndex})`);
 }
 
-if (require.main === module) {
-  main().then(total => console.log(`Finished ${total} tests.`)).catch(console.error);
-}
+
 
 module.exports = { main };
