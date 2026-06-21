@@ -1,0 +1,25 @@
+{"level":30,"time":1782021141327,"pid":10444,"hostname":"DESKTOP-P675BUJ","index[key]":{"selector":"#name","values":["","name family","name","name_family","name%$","123","John123","O'Connor","Anne-Marie","李小龍"," ","A","VeryLongNameThatExceedsNormalLengthForTestingPurpose","name!","@name","name#","name$","name%","name^","name&"]}}
+{"level":30,"time":1782021141327,"pid":10444,"hostname":"DESKTOP-P675BUJ","index[key]":{"selector":"#phone","values":["","05","+54 9 11 0000-0000","050000000","123","000-000-0000","+1 (555) 555-5555","5555555555","+44 20 7946 0958","123456789012345","+123-456-7890","abcde","++123456","12 34 56","0 5 5 0 0 0 0 0 0","(050) 0000-0000","+54-9-11-1234-5678","+540500000000"]}}
+{"level":30,"time":1782021141327,"pid":10444,"hostname":"DESKTOP-P675BUJ","index[key]":{"selector":"#company","values":["","^&","BBC","Company123","Acme!","O'Reilly","Mega_Corp","Test&Co","MyCompany$","LongCompanyNameThatExceedsLimits","12345","@Company","Company#","Company%","Company^","Company*","Company(","Company)","Company+","Company="]}}
+{"level":30,"time":1782021141327,"pid":10444,"hostname":"DESKTOP-P675BUJ","index[key]":{"selector":"#employees","values":["1-10","11-50","51-500","500+"]}}
+{"level":30,"time":1782021141327,"pid":10444,"hostname":"DESKTOP-P675BUJ","index[key]":{"selector":"#email","values":["","kgmail.com","afekalrn@gmail.com","$","user@","@domain.com","user@domain","user@domain..com","user.name+test@example.com","user_name@example.co.uk","user-name@sub.domain.com","user@123.123.123.123","plainaddress","missingatsign.com","missingdomain@.com","name@domain.c","name@domain.toolongtld","name@domain..com","user@domain#com","user@domain!com"]}}
+{"level":30,"time":1782021141327,"pid":10444,"hostname":"DESKTOP-P675BUJ","index[key]":{"selector":"#website","values":["","https://example.com","https://test.netlify.app/","http://example.com","not_a_valid_url","ftp://invalid-protocol.com","https://this-domain-does-not-exist-123456789.com","localhost:3000"]}}
+{"level":30,"time":1782021141327,"pid":10444,"hostname":"DESKTOP-P675BUJ","index[key]":{"selector":"xpath=/html/body/div[1]/div[2]/div[2]/div/form/p[7]/button","values":[]}}
+{"level":30,"time":1782021141523,"pid":10444,"hostname":"DESKTOP-P675BUJ","key":"name"}
+{"level":30,"time":1782021141523,"pid":10444,"hostname":"DESKTOP-P675BUJ","key":"+54 9 11 0000-0000"}
+{"level":30,"time":1782021141523,"pid":10444,"hostname":"DESKTOP-P675BUJ","key":"BBC"}
+{"level":30,"time":1782021141523,"pid":10444,"hostname":"DESKTOP-P675BUJ","key":"51-500"}
+{"level":30,"time":1782021141523,"pid":10444,"hostname":"DESKTOP-P675BUJ","key":"afekalrn@gmail.com"}
+{"level":30,"time":1782021141523,"pid":10444,"hostname":"DESKTOP-P675BUJ","key":"https://test.netlify.app/"}
+{"level":30,"time":1782021141523,"pid":10444,"hostname":"DESKTOP-P675BUJ","key":""}
+{"level":30,"time":1782021141523,"pid":10444,"hostname":"DESKTOP-P675BUJ","action":""}
+{"level":30,"time":1782021142377,"pid":10444,"hostname":"DESKTOP-P675BUJ","action":"name"}
+{"level":30,"time":1782021142435,"pid":10444,"hostname":"DESKTOP-P675BUJ","action":"+54 9 11 0000-0000"}
+{"level":30,"time":1782021142456,"pid":10444,"hostname":"DESKTOP-P675BUJ","action":"BBC"}
+{"level":30,"time":1782021142474,"pid":10444,"hostname":"DESKTOP-P675BUJ","selector":"#employees"}
+{"level":30,"time":1782021142474,"pid":10444,"hostname":"DESKTOP-P675BUJ","action":"employees"}
+{"level":30,"time":1782021142486,"pid":10444,"hostname":"DESKTOP-P675BUJ","action":"afekalrn@gmail.com"}
+{"level":30,"time":1782021142508,"pid":10444,"hostname":"DESKTOP-P675BUJ","action":"https://test.netlify.app/"}
+{"level":30,"time":1782021142686,"pid":10444,"hostname":"DESKTOP-P675BUJ","action":"C:\\Users\\User\\puppjs\\screenshots\\beforeClick.png"}
+{"level":30,"time":1782021143200,"pid":10444,"hostname":"DESKTOP-P675BUJ","action":""}
+{"level":30,"time":1782021143540,"pid":10444,"hostname":"DESKTOP-P675BUJ","action":"C:\\Users\\User\\puppjs\\screenshots\\AfterClick.png"}
