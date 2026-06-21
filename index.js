@@ -9,7 +9,7 @@ const { readJson } = require('./Utils/helpers');
 const { SELECTORS_REL, thankYouSelectorFromMap } = require('./Selectors/registry');
 const { buildArgentinaRunPlan } = require('./services/ACMEService');
 const { runFlowEngine } = require('./Engine/flowEngine');
-
+const logger=require('./Patterns/logger')
 const DATA_FILE = 'Jsons/ACMEform.json';
 
 
@@ -17,7 +17,13 @@ function buildTestCaseByIndex(index, data) {
   const result = {};
 
   for (const key of Object.keys(data)) {
-    result[key] = data[key][index] ?? data[key][0] ?? '';
+    const values = data[key]?.values || [];
+
+    result[key] =
+        values[index] ??
+        values[0] ??
+        '';
+    logger.info({"key": result[key]})
   }
 
   return result;
@@ -74,5 +80,11 @@ async function main() {
 }
 
 
+if (require.main === module) {
+  main().catch(err => {
+    console.error(err);
+    process.exit(1);
+  });
+}
 
 module.exports = { main };

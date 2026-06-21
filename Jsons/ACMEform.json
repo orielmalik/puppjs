@@ -20,7 +20,7 @@
         "Company*", "Company(", "Company)", "Company+", "Company="],
   "employees": ["1-10","11-50","51-500","500+"],
   "email": [
-    "", "afekalrn@gmail.com", "kgmail.com", "$",
+    "", "kgmail.com", "afekalrn@gmail.com", "$",
     "user@", "@domain.com", "user@domain", "user@domain..com",
     "user.name+test@example.com", "user_name@example.co.uk",
     "user-name@sub.domain.com", "user@123.123.123.123",
@@ -29,8 +29,8 @@
     "user@domain#com", "user@domain!com"
   ],
   "website": ["",
-    "https://test.netlify.app/",
     "https://example.com",
+    "https://test.netlify.app/",
     "http://example.com",
     "not_a_valid_url",
     "ftp://invalid-protocol.com",
