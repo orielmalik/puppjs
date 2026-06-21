@@ -20,7 +20,7 @@ function buildTestCaseByIndex(index, data) {
     const values = data[key]?.values || [];
 
     result[key] =
-        values[index] ??
+        values[index%values.length] ??
         values[0] ??
         '';
     logger.info({"key": result[key]})
@@ -32,9 +32,12 @@ async function main() {
   const selectorsMap = readJson(SELECTORS_REL);
   const indexMap = buildIndex(DATA_FILE, SELECTORS_REL);
   const formDef = readJson(DATA_FILE);
+  const raw = process.argv[2];
 
-  const modeIndex = parseInt(process.argv[2], 10) || 2;
-  // 2 = stable guaranteed case
+  const modeIndex =
+      raw !== undefined
+          ? Math.abs(Number(raw))
+          : 2;
 
   console.log(`Running MODE INDEX: ${modeIndex}`);
 

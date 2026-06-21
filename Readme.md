@@ -1,93 +1,40 @@
-# PuppJS - Playwright Test Automation Framework
+# PuppJS - Playwright Form Automation Framework
 
-**Advanced Form Automation Framework** built with **Playwright** for reliable web form testing.
-
----
-
-## Overview
-
-**PuppJS** is a well-structured test automation framework designed to automatically fill, submit, and validate web forms. 
-
-The framework currently targets the demo form at:  
-**https://test.netlify.app/**
-
-It fills all fields (Name, Email, Phone, Company, Number of Employees), captures screenshots, submits the form, verifies successful submission on the "Thank You" page, and cleans the form for the next test iteration.
-
-The project is built using professional design patterns and a **Finite State Machine (FSM)** to manage the test flow efficiently.
+PuppJS is a modular and extensible **end-to-end test automation framework** built on top of **Playwright**.  
+It is designed for automated testing of dynamic web forms using structured test data, design patterns, and a controlled execution engine.
 
 ---
 
-## What This Code Does
+## 🚀 Overview
 
-- Launches a Playwright Chromium browser (headless or headful)
-- Navigates to the target form page
-- Loads test data from JSON files
-- Fills every form field according to the selected test mode
-- Selects dropdown value (Number of Employees)
-- Takes screenshots before submission
-- Submits the form
-- Validates that the success ("Thank You") page appears
-- Clears the form
-- Repeats the process for the requested number of iterations
-- Provides clear console logging and final summary
+PuppJS automates full form workflows including:
 
-Supports two main modes:
-- **`PASS`** – Positive test cases (valid data)
-- **`FAIL`** – Negative / Edge case testing
+- Navigation to target web pages
+- Dynamic form filling using JSON-driven datasets
+- Support for positive and negative test scenarios
+- Dropdown handling (e.g. employees selection)
+- Screenshot capture during execution
+- Form submission
+- Validation of success state ("Thank You" page)
+- Automatic cleanup between test runs
+- Iterative execution for large-scale testing
 
----
+The framework currently targets:
 
-## Key Features
-
-- Clean separation of concerns using design patterns (Adapter, Builder, Engine, etc.)
-- JSON-driven test data (easy to add or modify test cases)
-- Robust error handling and logging
-- Automatic form cleanup between iterations
-- Screenshot capture for every test
-- Finite State Machine for reliable workflow control
-- Highly maintainable and scalable architecture
-- Easy configuration via `settings.json`
+👉 https://test.netlify.app/
 
 ---
 
-## Installation
+ Usage & Setup Guide
+
+
+
+Run the following commands to set up the project:
 
 ```bash
 npm install
 npm run install:browsers
+node index.js //2 by default
 ```
 
----
 
-## Usage
-
-```bash
-node index.js [count] [mode]
-
-# Examples:
-node index.js 3 PASS
-node index.js 1 FAIL
-
-# Run with visible browser:
-HEADLESS=false node index.js 1 PASS
-```
-
----
-
-## Project Structure
-
-```bash
-puppjs/
-├── index.js                    # Main entry point
-├── Jsons/
-│   ├── ACMEform.json      # Test data
-│   └── settings.json           # Configuration
-├── Patterns/                   # Design patterns (Adapter, Builder, Logger...)
-│   └── playwrightAdapter.js    # Playwright adapter implementation
-├── Engine/                     # Flow Engine & State Machine
-├── Actions/                    # Playwright actions
-│   └── playwrightActions.js    # Low-level browser primitives
-├── Utils/                      # Helpers, validators, etc.
-├── Selectors/                  # All element selectors
-└── screenshots/                # Automatically created folder
-```
