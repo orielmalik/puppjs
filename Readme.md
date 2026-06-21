@@ -34,7 +34,7 @@ Run the following commands to set up the project:
 ```bash
 npm install
 npm run install:browsers
-node index.js //2 by default
+node index.js modeindex //2 by default
 ```
 
 
